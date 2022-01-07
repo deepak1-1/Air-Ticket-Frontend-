@@ -1,42 +1,34 @@
 import React, {useState } from "react";
 import { Routes ,Route } from 'react-router-dom';
-import { basicInfo } from './store/Context';
+import { URLInfo, functions } from './helper/context';
+import { togglePassword, mainNotifier, 
+         inputNotifier, regexMatcher,
+         adminLoginChecker, adminLogout,userLoginChecker,
+         disable, enable, show, hide,loginChecker } from "./helper/BasicFunctions";
 
-import Login from './components/basics/Login';
-import LoginAdmin from './components/basics/LoginAdmin';
-import SignUp from './components/basics/SignUp';
-import ForgetPassword from './components/basics/ForgetPassword'
-import AdminHomePage from './components/admin/Home';
-import UserHomePage from './components/user/Home';
-import AddAdmin from "./components/admin/AddAdmin";
-import AddRoutes from './components/admin/AddRoutes';
-import ScheduleFlight from "./components/admin/ScheduleFlight";
-import Profile from "./components/admin/Profile";
-import RouteUpdate from "./components/admin/RouteUpdate";
+import Home from "./components/user/Home";
+import AdminLogin from "./components/basic/AdminLogin";
+import UserLogin from "./components/basic/UserLogin";
+import Register from "./components/basic/Register";
+import AdminPage from "./components/admin/AdminPage";
 
 const App = () =>{
 
-    const [basicInfo_, setBasicInfo_] = useState({
-        url: "http://localhost:4000/",
-        login: false
-    })
+    const [ urlInfo_, seturlInfo_] = useState("http://localhost:4000/")
 
     return (
-        <basicInfo.Provider value={{basicInfo_, setBasicInfo_}}>
-            <Routes>
-                <Route exact path="/" element={<SignUp />} ></Route>
-                <Route exact path="/Login" element={<Login />}></Route>
-                <Route exact path="/forget-password" element={<ForgetPassword />}></Route>
-                <Route exact path="/login-admin" element={<LoginAdmin />}></Route>
-                <Route exact path="/home" element={<UserHomePage />}></Route>
-                <Route exact path="/home-admin" element={<AdminHomePage />}></Route>
-                <Route exact path="/admin/add-admin" element={<AddAdmin />}></Route>
-                <Route exact path="/admin/add-route" element={<AddRoutes />}></Route>
-                <Route exact path="/admin/schedule-flight" element={<ScheduleFlight />}></Route>
-                <Route exact path="/admin/profile" element={<Profile />}></Route>
-                <Route exact path="/admin/update-routes" element={<RouteUpdate />}></Route>
-            </Routes>
-        </basicInfo.Provider>
+        <URLInfo.Provider value={{urlInfo_}}>
+            <functions.Provider value={{togglePassword, mainNotifier, disable, enable, userLoginChecker,loginChecker,
+                                        inputNotifier, regexMatcher, adminLogout, show, hide, adminLoginChecker}}>
+                <Routes>
+                    <Route exact path="/" element={<Home />} ></Route>
+                    <Route exact path="/register" element={<Register />} ></Route>
+                    <Route exact path="/user-login" element={<UserLogin />} ></Route>
+                    <Route exact path="/admin-login" element={<AdminLogin />} ></Route>
+                    <Route exact path="/admin" element={<AdminPage />} ></Route>
+                </Routes>
+            </functions.Provider>
+        </URLInfo.Provider>
     )
 }
 
