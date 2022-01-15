@@ -62,6 +62,11 @@ body{
 
 #mainDiv {
     height: 100% !important;
+    /* margin-top: 50px !important; */
+}
+
+#mainHeading {
+    margin-top: 70px !important;
 }
 
 #formDiv {

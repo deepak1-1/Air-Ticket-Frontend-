@@ -5,7 +5,7 @@ import { URLInfo, functions } from '../../helper/context'
 
 const AdminNavbar = () => {
     
-    const { adminLogout } = useContext(functions)
+    const { Logout } = useContext(functions)
 
     return (
         <>
@@ -23,31 +23,28 @@ const AdminNavbar = () => {
                                 <a className="nav-link navLink" data-toggle="dropdown" id="updateDropdown">Add <i class="fas fa-caret-down align-middle pl-1"></i></a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="/admin/add-admin">Admin</a>
-                                    <a class="dropdown-item" href="/admin/add-route">Route</a>
-                                </div>
-                            </li>
-                            <li className="nav-item dropdown">
-                                <a className="nav-link navLink" data-toggle="dropdown" id="updateDropdown">Schedule Flight <i class="fas fa-caret-down align-middle pl-1"></i></a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="/admin/add-everyday-flight">EveryDay Flight</a>
-                                    <a class="dropdown-item" href="/admin/add-normal-flight">Normal Flight</a>
+                                    <a class="dropdown-item" href="/admin/add-flight-route">Flight Route</a>
                                 </div>
                             </li>
                             <li className="nav-item dropdown">
                                 <a className="nav-link navLink" data-toggle="dropdown" id="updateDropdown">Update <i class="fas fa-caret-down align-middle pl-1"></i></a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="/admin/update-route">Routes</a>
+                                    <a class="dropdown-item" href="/admin/update-flight-route">Flight Routes</a>
                                     <a class="dropdown-item" href="/admin/update-flight">Flight schedule</a>
+                                    <a class="dropdown-item" href="/admin/update-password">Update Password</a>
                                 </div>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link navLink" href="/admin/schedule-flight">Schedule Flight</a>
                             </li>    
-                            <li className="nav-item">
-                                <a className="nav-link navLink" href="/admin/notification">Notification</a>
+                            {/* <li className="nav-item">
+                                <a className="nav-link navLink" href="/admin/notification" disabled>Notification</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link navLink" href="/admin/free-planes">Free Planes</a>
-                            </li>
+                                <a className="nav-link navLink" href="/admin/free-planes" disabled>Free Flights</a>
+                            </li> */}
                             <li className="nav-item">
-                                <a className="nav-link navLink" onClick={adminLogout}>
+                                <a className="nav-link navLink" onClick={Logout}>
                                     Log Out
                                 </a>
                             </li>

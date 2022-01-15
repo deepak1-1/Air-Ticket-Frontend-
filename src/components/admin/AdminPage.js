@@ -6,7 +6,7 @@ import AdminNavbar from '../basic/AdminNavbar'
 
 const AdminPage = () =>{
 
-    const { mainNotifier, inputNotifier, regexMatcher, adminLoginChecker, adminLogout,loginChecker } = useContext(functions)
+    const { Logout, addHeaders, loginChecker } = useContext(functions)
     const { urlInfo_ } = useContext(URLInfo);
     
     const [isLoading ,setIsLoading] = useState(true);
@@ -18,29 +18,20 @@ const AdminPage = () =>{
     //sending request on mounting 
     useEffect( ()=> {
 
-        const check = adminLoginChecker();
-        console.log(check);
-        setIsLogin(check);
+        const countToday = axios.get( urlInfo_ + 'admin/count-today', addHeaders({}))
 
-        let token = window.localStorage.getItem('token')
+        Promise.all([countToday])
+        .then((values)=>{
 
-        axios.get( urlInfo_ + 'admin/count-today', {token})
-            .then( res=> res.data.data)
-            .then(data=>{
-                setBookingCount(data.booking);
-                setFlightCount(data.flight);
-            })
-
-        axios.get(urlInfo_+'admin/admin-count', {token})
-            .then(res=> res.data)
-            .then(data =>{
-                setAdminCount(data.data);
-            });
-        setIsLoading(false);
-        console.log(isLogin, isLoading);
-        return () =>{
+            const data = values[0].data;
+            loginChecker(data);
+            setFlightCount(data.flight);
+            setBookingCount(data.booking);
+            setAdminCount(data.admin);
+            setIsLogin(true);
             setIsLoading(false);
-        }
+
+        })
     }, [])
 
 

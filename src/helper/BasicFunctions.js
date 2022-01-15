@@ -48,20 +48,12 @@ export const inputNotifier = (inputDiv, notifyDiv, message, type) => {
 
 export const mainNotifier = ( notificationDiv, message, type ) => {
 
-    let notify;
+    const classname = `col-12 alert alert-${type}`
 
-    if(type === "danger"){
-        notify = "red";
-    } else {
-        notify = "green";
-    }
-
-    notificationDiv.current.style.color = notify;
-    notificationDiv.current.innerText = message;
+    notificationDiv.current.innerHTML = `<div className=${classname}>${message}</div>`
 
     setTimeout( ()=>{
-        notificationDiv.current.style.color = '';
-        notificationDiv.current.innerText = "";
+        notificationDiv.current.innerHTML = "";
     }, 3000);
 
 }
@@ -110,7 +102,7 @@ export const checkAdmin = () => {
     
 }
 
-export const adminLogout = ( ) => {
+export const Logout = ( ) => {
 
     window.localStorage.setItem('login', false);
     window.localStorage.setItem('token', '');
@@ -135,64 +127,26 @@ export const hide = (element) => {
     element.current.style.display = "none";
 }
 
+export const adminLoginChecker = () => {
+    
+    const token = window.localStorage.getItem('token');
+    return axios.get(URL+"admin/check-admin", {headers: {token}})
 
-export const loginChecker = () => {
-    let login = window.localStorage.getItem('login')
+}
 
-    if(login === "admin"){
-        window.location.href = "/admin";
-    } else {
-        window.location.href = "/";
+export const loginChecker = (data) => {
+    if(!data.login){
+        window.location.href = '/';
     }
 }
 
-export const adminLoginChecker = () => {
-    
-    if(window.localStorage.getItem('login') !== "admin")
-        {
-            window.localStorage.setItem('login', 'false');
-            window.location.href = "/";
-        }
-    let token = window.localStorage.getItem('token');
-    axios.post(URL+"check-user", {token, data: "admin"})
-    .then(res => res.data)
-    .then( data => {
-        console.log(data);
-        if(data.found)
-            return true
-        window.localStorage.setItem('login', 'false');
-        window.location.href = "/";
-    })
-    .catch(err => {
-        console.log(err);
-        setTimeout(()=>{  
-            window.localStorage.setItem('login', 'false');
-            window.location.href = "/"; 
-        },4000)
-    })
+export const userLoginChecker = () => {
 }
 
+export const addHeaders = (data) => {
 
-export const userLoginChecker = () => {
-    
-    let value = window.localStorage.getItem('login');
-        if(value === 'user')
-            {
-                let token = window.localStorage.getItem('token');
-                axios.post(URL+"check-user", { token, data: "user" })
-                    .then(res=>res.data)
-                    .then(data=>{
-                        console.log(data);
-                        if(data.found)
-                            return true;
-                        return false;
-                    })
-                    .catch(error=>{
-                        console.log(error);
-                        return false;
-                    })
-                return false
-        } else {
-            return false;
-        }
+    const token = window.localStorage.getItem('token');
+    data.headers = {token}
+    return data;
+
 }
