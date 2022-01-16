@@ -1,7 +1,9 @@
-import BasicNavbar from "./BasicNavbar";
-
-import { functions } from "../../helper/context";
 import { useState, useEffect, useContext, useRef } from 'react';
+import axios from 'axios';
+
+import BasicNavbar from "./BasicNavbar";
+import { functions, URLInfo } from "../../helper/context";
+
 
 const Register = () => {
 
@@ -13,33 +15,66 @@ const Register = () => {
     const emailNotify = useRef(null);
     const passwordNotify = useRef(null);
     const confirmPasswordNotify = useRef(null);
+    const mainNotify = useRef(null);
 
-    const {togglePassword} = useContext(functions);
+    const {togglePassword, inputNotifier, mainNotifier, regexMatcher} = useContext(functions);
+    const {urlInfo_} = useContext(URLInfo)
 
 
 
     const handleRegister = () => {
 
-        console.log(name.current.value);
-        console.log(email.current.value);
-        console.log(password.current.value);
-        console.log(confirmPassword.current.value);
-
-        console.log(nameNotify);
-        console.log(emailNotify);
-        console.log(passwordNotify);
-        console.log(confirmPasswordNotify);
+        let emailPass = false, namePass = false, passwordPass = false;
         
-        nameNotify.current.style.color = "red";
-        nameNotify.current.innerText = "I worked!";
-        name.current.style.border = "1px solid red";
+        if(name.current.value.trim().length === 0){
+            inputNotifier(name, nameNotify, "Empty", "danger");
+        } else { namePass = true }
 
-        setTimeout( ()=>{
-            name.current.style.border = "";
-            nameNotify.current.style.color = '';
-            nameNotify.current.innerText = '';
-        },3000);
-        
+        if(!regexMatcher(email.current.value, "email")){
+            inputNotifier(email, emailNotify, "Invalid", "danger");
+        } else { emailPass = true }
+
+        if(!regexMatcher(password.current.value, "password")){
+            inputNotifier(password, passwordNotify, "atleast 6 character long", "danger");
+            inputNotifier(confirmPassword, confirmPasswordNotify, "", "danger");
+        } else {
+            if(password.current.value !== confirmPassword.current.value){
+                inputNotifier(confirmPassword, confirmPasswordNotify, "Not matches", "danger");
+                inputNotifier(password, passwordNotify, "", "danger");
+            } else { passwordPass = true }
+        }
+
+        if(emailPass && namePass && passwordPass){
+            
+            axios.post(urlInfo_+"register", {
+                name: name.current.value,
+                email: email.current.value,
+                password: password.current.value
+            }).then(res=>res.data)
+            .then(data=>{
+                if(data.error){
+                    mainNotifier(mainNotify, data.error, "danger");
+                }
+                if(data.email){
+                    inputNotifier(email, emailNotify, "Email Already exists", "danger");
+                }
+
+                if(data.added){
+                    mainNotifier(mainNotify, "Registered successfully");
+                    inputNotifier(email, emailNotify, "", "success");
+                    setTimeout(()=>{
+                        window.location.href = '/user-login';
+                    },3000)
+                }
+            })
+            .catch(err=>{
+                console.log(err);
+                mainNotifier(mainNotify, "Issue While registering!", "danger");
+                inputNotifier(email, emailNotify, "", "danger");
+            })
+
+        }
+
     }
 
 
@@ -47,12 +82,12 @@ const Register = () => {
     return ( 
         <>  
             <BasicNavbar />
-            <BasicNavbar />
             <div className="d-flex align-item-center p-2" id="mainDiv">
                 
                 <div className="p-5 text-center" id="formDiv">
 
-                    <h2 className="mb-3">Register Yourself</h2>
+                    <h2 className="mb-2">Register Yourself</h2>
+                    <div className="mb-2" ref={mainNotify}></div>
 
                     <div className="input-group mb-0">
                         <div className="input-group-prepend">

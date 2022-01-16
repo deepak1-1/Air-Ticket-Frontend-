@@ -18,14 +18,34 @@ const Home = (props) => {
     useEffect( ()=>{
 
         let login = window.localStorage.getItem('login')
-        if(login !== "admin"){
-            const returnValue = userLoginChecker();
-            setLoginValue(returnValue);
-        } else {
-            loginChecker();
-        }        
+        let userChecker;
+        switch(login){
+            case "false":
+                setIsLoading(false); 
+                break;
+            case "ADMIN":
+                window.location.href = "/admin";
+                break;
+            case "USER":
+                userChecker = userLoginChecker();
+                userChecker.then(res=>res.data)
+                .then(data=>{
+                    if(loginChecker(data)){
+                        setLoginValue(true);
+                    }
+                })
+                setIsLoading(false);
+                break;
+        }
         
-        setIsLoading(false);
+        // Promise.all([userChecker])
+        // .then(values=>{
+        //     userData = values[0].data;
+        //     if(loginChecker(userData)){
+        //         setLoginValue(true);
+        //     }
+        //     setIsLoading(false);
+        // })
 
     }, [])
 
@@ -36,7 +56,7 @@ const Home = (props) => {
             <>
                 { loginValue? <UserNavbar /> : <BasicNavbar />}
                 <div className='container text-center' id="mainDiv">
-                    Hello World + { urlInfo_ }
+                    World + { urlInfo_ }
                 </div>
             </>
             }

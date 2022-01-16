@@ -48,6 +48,7 @@ const AdminLogin = () => {
 
             } else {
 
+                mainNotifier(mainNotify, "logging In....", "secondary");
                 axios.post( urlInfo_+ "login-admin", 
                             {email: email.current.value, password: password.current.value} 
                         )
@@ -62,7 +63,7 @@ const AdminLogin = () => {
                                     inputNotifier( password, passwordNotify, data.error, "danger");
                                 } else {
 
-                                    window.localStorage.setItem('login', "admin");
+                                    window.localStorage.setItem('login', "ADMIN");
                                     window.localStorage.setItem('token', data.token);
 
                                     mainNotifier(mainNotify, "Login Successful!", "success");

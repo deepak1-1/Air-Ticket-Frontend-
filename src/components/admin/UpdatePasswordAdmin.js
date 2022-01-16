@@ -42,9 +42,10 @@ const UpdatePasswordAdmin = (props) => {
     useEffect( ()=> {
         adminLoginChecker().then(res=>res.data)
         .then(data => {
-            loginChecker(data);
-            setIsLoading(false);
-            setIsLogin(true);
+            if(loginChecker(data)){
+                setIsLoading(false);
+                setIsLogin(true);
+            }; 
         })
 
     }, [])

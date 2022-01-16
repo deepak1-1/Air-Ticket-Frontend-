@@ -24,12 +24,13 @@ const AdminPage = () =>{
         .then((values)=>{
 
             const data = values[0].data;
-            loginChecker(data);
-            setFlightCount(data.flight);
-            setBookingCount(data.booking);
-            setAdminCount(data.admin);
-            setIsLogin(true);
-            setIsLoading(false);
+            if(loginChecker(data)){
+                setFlightCount(data.flight);
+                setBookingCount(data.booking);
+                setAdminCount(data.admin);
+                setIsLogin(true);
+                setIsLoading(false);
+            }
 
         })
     }, [])

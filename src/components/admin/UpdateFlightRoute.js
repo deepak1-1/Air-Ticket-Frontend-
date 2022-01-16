@@ -36,10 +36,11 @@ const UpdateFlightRoute = (props) => {
         axios.get(urlInfo_+'admin/get-flight-routes', addHeaders({}))
         .then(res=>res.data)
         .then(data=>{
-            loginChecker(data);
-            setIsLogin(true);
-            setRouteData( data.data );
-            setIsLoading(false);
+            if(loginChecker(data)){
+                setIsLogin(true);
+                setRouteData( data.data );
+                setIsLoading(false);
+            }
         })
         .catch(err=>{
             console.log(err);

@@ -83,28 +83,9 @@ export const regexMatcher = ( string_to_match, type) => {
 }
 
 
-export const checkAdmin = () => {
-
-    let token = window.localStorage.getItem('token');
-    
-    axios.post(URL+"admin/check-admin", {token})
-        .then(res => res.data)
-        .then(data=>{
-            
-            if(!data.valid)
-                window.location.href = "/"
-        
-        })
-        .catch(error => {
-            console.log(error);
-            window.location.href = "/"
-        })
-    
-}
-
 export const Logout = ( ) => {
 
-    window.localStorage.setItem('login', false);
+    window.localStorage.setItem('login', 'false');
     window.localStorage.setItem('token', '');
     window.location.href = "/";
 
@@ -136,11 +117,17 @@ export const adminLoginChecker = () => {
 
 export const loginChecker = (data) => {
     if(!data.login){
+        window.localStorage.setItem('login', 'false');
+        window.localStorage.setItem('token', '');
         window.location.href = '/';
+        return false;
     }
+    return true;
 }
 
 export const userLoginChecker = () => {
+    const token = window.localStorage.getItem('token');
+    return axios.get(URL+"user/check-user", {headers: {token}});
 }
 
 export const addHeaders = (data) => {
