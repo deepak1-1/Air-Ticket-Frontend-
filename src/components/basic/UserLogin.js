@@ -246,8 +246,35 @@ const UserLogin = () => {
 
     }
 
-    const handleGoogleResponse = (res)=>{
-        console.log(res);
+    const handleGoogleResponse = (googleResponse)=>{
+        
+    axios.post(urlInfo_+"google/login", {
+            googleId: googleResponse.googleId,
+            token: googleResponse.tokenId
+        }).then(res=>res.data)
+        .then(data=>{
+            console.log(data);
+            if(!data.email){
+                mainNotifier(mainNotify, "No user with this email", "danger");
+            }else {
+                if(!data.password){
+                    mainNotifier(mainNotify, "Password Incorrect", "danger");
+                } else {
+                    mainNotifier(mainNotify, "Login Successfull", "success");
+                    window.localStorage.setItem('login', "USER");
+                    window.localStorage.setItem('token', data.token);
+                    setTimeout(()=>{
+                        window.location.href = '/'
+                    }, 3000 )
+                }
+            }
+            
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+
+
     }
 
 
@@ -256,7 +283,7 @@ const UserLogin = () => {
             <BasicNavbar />
             <div className="d-flex align-item-center p-2" id="mainDiv">
                 <div className="p-5 text-center" id="formDiv">
-                    <h2 className="mb-2">User Login!</h2>
+                    <h2 className="mb-2">User Login</h2>
                     <div ref={mainNotify} className="mb-2"></div>
                     <div className="input-group mb-0">
                         <div className="input-group-prepend">
@@ -287,7 +314,7 @@ const UserLogin = () => {
 
                     <div className='text-center'>
                         <GoogleLogin
-                            clientId='49974421307-4tj948gbjsthp1gf6r1rtlhl5tafg8bb.apps.googleusercontent.com'
+                            clientId="49974421307-4tj948gbjsthp1gf6r1rtlhl5tafg8bb.apps.googleusercontent.com"
                             buttonText='Login'
                             onSuccess={handleGoogleResponse}
                             onFailure={handleGoogleResponse}

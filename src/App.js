@@ -15,6 +15,7 @@ import AddAdmin from "./components/admin/AddAdmin";
 import UpdatePasswordAdmin from "./components/admin/UpdatePasswordAdmin";
 import AddFlightRoute from "./components/admin/AddFlightRoute";
 import UpdateFlightRoute from "./components/admin/UpdateFlightRoute";
+import ScheduleFlight from "./components/admin/ScheduleFlight";
 
 const App = () =>{
 
@@ -35,6 +36,7 @@ const App = () =>{
                     <Route exact path="/admin/update-password" element={<UpdatePasswordAdmin />} ></Route>
                     <Route exact path="/admin/add-flight-route" element={<AddFlightRoute />} ></Route>
                     <Route exact path="/admin/update-flight-route" element={<UpdateFlightRoute />} ></Route>
+                    <Route exact path="/admin/schedule-flight" element={<ScheduleFlight />} ></Route>
                 </Routes>
             </functions.Provider>
         </URLInfo.Provider>

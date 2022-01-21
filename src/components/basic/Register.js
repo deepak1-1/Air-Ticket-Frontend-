@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext, useRef } from 'react';
+import {GoogleLogin} from 'react-google-login';
 import axios from 'axios';
 
 import BasicNavbar from "./BasicNavbar";
@@ -78,6 +79,34 @@ const Register = () => {
     }
 
 
+    const handleGoogleResponse = (googleResponse) => {
+
+        axios.post(urlInfo_+"google/register", {
+            googleId: googleResponse.googleId,
+            token: googleResponse.tokenId
+        }).then(res=>res.data)
+        .then(data=>{
+            if(data.error){
+                mainNotifier(mainNotify, data.error, "danger");
+            }
+            if(data.email){
+                mainNotifier(mainNotify, "Email Already exists", "danger");
+            }
+
+            if(data.added){
+                mainNotifier(mainNotify, "Registered successfully");
+                setTimeout(()=>{
+                    window.location.href = '/user-login';
+                },3000)
+            }
+        })
+        .catch(err=>{
+            console.log(err);
+            mainNotifier(mainNotify, "Issue While registering!", "danger");
+            inputNotifier(email, emailNotify, "", "danger");
+        })
+    }
+
 
     return ( 
         <>  
@@ -137,6 +166,16 @@ const Register = () => {
                         <h2 id="or">
                             <span>or</span>
                         </h2>
+                    </div>
+
+                    <div className='text-center'>
+                        <GoogleLogin
+                            clientId = "49974421307-4tj948gbjsthp1gf6r1rtlhl5tafg8bb.apps.googleusercontent.com"
+                            buttonText='Sign Up'
+                            onSuccess={handleGoogleResponse}
+                            onFailure={handleGoogleResponse}
+                            cookiePolicy='single_host_origin'
+                         />
                     </div>
 
                 </div>

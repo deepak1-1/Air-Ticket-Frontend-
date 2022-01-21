@@ -12,7 +12,7 @@ const UpdateFlightRoute = (props) => {
 
     const [isLoading ,setIsLoading] = useState(true);
     const [isLogin, setIsLogin] = useState(false);
-    const [routeData, setRouteData] = useState([]);
+    const [routeData, setRouteData] = useState([]); //"To be worked";
     const [modalRoute, setModalRoute] = useState({});
     const [routeDelete, setRouteDelete] = useState({});
     const [index, setIndex] = useState(null);
@@ -254,7 +254,7 @@ const UpdateFlightRoute = (props) => {
                                 <div class="modal-dialog text-center">
                                     <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Are you sure to delete this Route?</h4>
+                                        <h4 class="modal-title">Are you sure ?</h4>
                                         <button type="button" class="close" data-dismiss="modal" onClick={handleDeleteClose}>&times;</button>
                                     </div>
                                     <div class="modal-body">
@@ -277,8 +277,8 @@ const UpdateFlightRoute = (props) => {
                                         </table>
                                     </div>
                                     <div class="modal-footer clearfix mx-3">
-                                        <button type="button" class="btn btn-primary float-left" onClick={handleModalDelete}>Yes</button>
-                                        <button type="button" ref={closeDeleteModal}class="btn btn-danger float-right" onClick={handleDeleteClose} data-dismiss="modal">No</button>
+                                        <button type="button" class="btn btn-primary float-left" onClick={handleDeleteClose}>No</button>
+                                        <button type="button" ref={closeDeleteModal}class="btn btn-danger float-right" onClick={handleModalDelete} data-dismiss="modal">Delete</button>
                                     </div>
 
                                     </div>

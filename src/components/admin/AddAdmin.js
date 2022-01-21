@@ -120,7 +120,7 @@ const AddAdmin = (props) => {
                     
                     <div className="d-flex align-item-center p-2" id="mainDiv">
                         <div className="p-5 text-center" id="formDiv">
-                            <h2 className="mb-0">Add Admin!</h2>
+                            <h2 className="mb-0">Add Admin</h2>
                             <div ref={mainNotify} className='mb-3'></div>
                             
                             <div className="input-group mb-0">
