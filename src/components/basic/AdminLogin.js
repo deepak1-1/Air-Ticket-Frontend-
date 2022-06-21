@@ -106,6 +106,7 @@ const AdminLogin = () => {
                                     enable(forgetPasswordEmail);
                                     inputNotifier( forgetPasswordEmail, forgetPasswordEmailNotify, "Email doesn't exists", "danger" );
                                 } else {
+                                    console.log(data);
                                     if(!data.codeSended){
                                         enable(forgetPasswordEmail);
                                         inputNotifier( forgetPasswordEmail, forgetPasswordEmailNotify, "some issue while sending code", "danger" );
@@ -204,7 +205,6 @@ const AdminLogin = () => {
                     data: "admin" })
                 .then(res=> res.data)
                 .then(data=>{
-                    
                     if(!data.exists){
                         enable(forgetPasswordEmail);
                         inputNotifier( forgetPasswordEmail, forgetPasswordEmailNotify, "Email doesn't exists", "danger" );
@@ -212,7 +212,7 @@ const AdminLogin = () => {
                             closeBtn.current.click();
                         }, 2000)
                     } else {
-                        if(!data.codeSended){
+                        if (!data.codeSended) {
                             enable(forgetPasswordEmail);
                             inputNotifier( forgetPasswordEmail, forgetPasswordEmailNotify, "some issue while sending code", "danger" );
                             setTimeout( ()=>{

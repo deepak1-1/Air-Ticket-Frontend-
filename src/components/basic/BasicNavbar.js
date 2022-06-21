@@ -1,6 +1,6 @@
 import '../css/main.css';
 import { useState, useEffect } from 'react';
-
+import {Link } from 'react-router-dom'
 const BasicNavbar = () => {
 
     return (
@@ -16,13 +16,13 @@ const BasicNavbar = () => {
                     <div className="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
                         <ul className="navbar-nav navUL">
                             <li className="nav-item">
-                                <a className="nav-link navLink" href="/register">Register</a> 
+                                <Link className="nav-link navLink" to="/register">Register</Link> 
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link navLink" href="/user-login">User</a>
+                                <Link className="nav-link navLink" to="/user-login">User</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link navLink" href="/admin-login">Admin</a>
+                                <Link className="nav-link navLink" to="/admin-login">Admin</Link>
                             </li>
                         </ul>
                     </div>

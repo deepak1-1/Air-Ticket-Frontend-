@@ -15,7 +15,9 @@ const Home = (props) => {
     const [isLoading, setIsLoading] = useState(true);
 
     // runs everytime on reload
-    useEffect( ()=>{
+    useEffect(() => {
+        
+        // setIsLoading(false);
 
         let login = window.localStorage.getItem('login')
         let userChecker;

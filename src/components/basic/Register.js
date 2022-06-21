@@ -86,18 +86,24 @@ const Register = () => {
             token: googleResponse.tokenId
         }).then(res=>res.data)
         .then(data=>{
-            if(data.error){
-                mainNotifier(mainNotify, data.error, "danger");
-            }
-            if(data.email){
-                mainNotifier(mainNotify, "Email Already exists", "danger");
-            }
-
             if(data.added){
-                mainNotifier(mainNotify, "Registered successfully");
+                mainNotifier(mainNotify, "Successfull", "success");
+                window.localStorage.setItem('login', "USER");
+                window.localStorage.setItem('token', data.token);
                 setTimeout(()=>{
-                    window.location.href = '/user-login';
-                },3000)
+                    window.location.href = '/'
+                }, 3000 )
+            } else {
+                if(data.email && data.password){
+                    mainNotifier(mainNotify, "Successfull", "success");
+                    window.localStorage.setItem('login', "USER");
+                    window.localStorage.setItem('token', data.token);
+                    setTimeout(()=>{
+                        window.location.href = '/'
+                    }, 3000 )
+                } else {
+                    mainNotifier(mainNotify, "Please try without google", "danger");
+                }
             }
         })
         .catch(err=>{

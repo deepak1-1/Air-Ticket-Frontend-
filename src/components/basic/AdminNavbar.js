@@ -1,4 +1,6 @@
 import {useContext} from 'react';
+import {Link } from 'react-router-dom'
+
 
 import '../css/main.css';
 import { URLInfo, functions } from '../../helper/context'
@@ -22,26 +24,26 @@ const AdminNavbar = () => {
                             <li className="nav-item dropdown">
                                 <a className="nav-link navLink" data-toggle="dropdown" id="updateDropdown">Add <i class="fas fa-caret-down align-middle pl-1"></i></a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="/admin/add-admin">Admin</a>
-                                    <a class="dropdown-item" href="/admin/add-flight-route">Flight Route</a>
+                                    <Link class="dropdown-item" to="/admin/add-admin">Admin</Link>
+                                    <Link class="dropdown-item" to="/admin/add-flight-route">Flight Route</Link>
                                 </div>
                             </li>
                             <li className="nav-item dropdown">
                                 <a className="nav-link navLink" data-toggle="dropdown" id="updateDropdown">Update <i class="fas fa-caret-down align-middle pl-1"></i></a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="/admin/update-flight-route">Flight Routes</a>
-                                    <a class="dropdown-item" href="/admin/update-flight">Flight schedule</a>
-                                    <a class="dropdown-item" href="/admin/update-password">Update Password</a>
+                                    <Link class="dropdown-item" to="/admin/update-flight-route">Flight Routes</Link>
+                                    <Link class="dropdown-item" to="/admin/update-flight">Flight schedule</Link>
+                                    <Link class="dropdown-item" to="/admin/update-password">Update Password</Link>
                                 </div>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link navLink" href="/admin/schedule-flight">Schedule Flight</a>
+                                <Link className="nav-link navLink" to="/admin/schedule-flight">Schedule Flight</Link>
                             </li>    
                             {/* <li className="nav-item">
-                                <a className="nav-link navLink" href="/admin/notification" disabled>Notification</a>
+                                <Link className="nav-link navLink" to="/admin/notification" disabled>Notification</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link navLink" href="/admin/free-planes" disabled>Free Flights</a>
+                                <Link className="nav-link navLink" to="/admin/free-planes" disabled>Free Flights</Link>
                             </li> */}
                             <li className="nav-item">
                                 <a className="nav-link navLink" onClick={Logout}>

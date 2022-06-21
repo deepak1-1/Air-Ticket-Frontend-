@@ -248,30 +248,36 @@ const UserLogin = () => {
 
     const handleGoogleResponse = (googleResponse)=>{
         
-    axios.post(urlInfo_+"google/login", {
+    axios.post(urlInfo_+"google-auth", {
             googleId: googleResponse.googleId,
             token: googleResponse.tokenId
         }).then(res=>res.data)
         .then(data=>{
-            console.log(data);
-            if(!data.email){
-                mainNotifier(mainNotify, "No user with this email", "danger");
-            }else {
-                if(!data.password){
-                    mainNotifier(mainNotify, "Password Incorrect", "danger");
-                } else {
-                    mainNotifier(mainNotify, "Login Successfull", "success");
+            
+            if(data.added){
+                mainNotifier(mainNotify, "Successfull", "success");
+                window.localStorage.setItem('login', "USER");
+                window.localStorage.setItem('token', data.token);
+                setTimeout(()=>{
+                    window.location.href = '/'
+                }, 3000 )
+            } else {
+                if(data.email && data.password){
+                    mainNotifier(mainNotify, "Successfull", "success");
                     window.localStorage.setItem('login', "USER");
                     window.localStorage.setItem('token', data.token);
                     setTimeout(()=>{
                         window.location.href = '/'
                     }, 3000 )
+                } else {
+                    mainNotifier(mainNotify, "Please try without google", "danger");
                 }
             }
             
         })
         .catch(err=>{
             console.log(err);
+            mainNotifier(mainNotify, "Some Issue", "danger");
         })
 
 

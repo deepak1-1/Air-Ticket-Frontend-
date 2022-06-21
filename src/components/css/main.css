@@ -87,3 +87,23 @@ body{
 #updateDropdown {
     cursor: pointer ;
 }
+
+
+.weekDays {
+    border: 1px solid Black !important;
+    border-radius: 100%;
+    margin-inline: 5px;
+    padding: 10px;
+    font-size: 10px;
+    font-weight: bold;
+    background-color: white;
+}
+
+.weekDays:hover {
+    cursor: pointer;
+}
+
+.active {
+    background-color: black;
+    color:white;
+}
